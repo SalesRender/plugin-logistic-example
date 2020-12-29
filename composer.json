@@ -1,0 +1,24 @@
+{
+  "name": "leadvertex/plugin-logistic-example",
+  "description": "Example logistic plugin",
+  "type": "project",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Timur Kasumov aka XAKEPEHOK",
+      "email": "support@leadvertex.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Leadvertex\\Plugin\\Instance\\Logistic\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.4.0",
+    "ext-json": "*",
+    "leadvertex/plugin-core-logistic": "0.0.*",
+    "leadvertex/plugin-addon-enum-fields": "^0.1.0"
+  }
+}

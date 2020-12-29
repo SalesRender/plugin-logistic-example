@@ -1,0 +1,13 @@
+GET {{host}}/protected/forms/batch/1
+Content-Type: application/json
+Accept-Language: ru_RU
+X-PLUGIN-TOKEN: {{token}}
+
+###
+
+GET {{host}}/protected/forms/batch/2
+Content-Type: application/json
+Accept-Language: ru_RU
+X-PLUGIN-TOKEN: {{token}}
+
+###

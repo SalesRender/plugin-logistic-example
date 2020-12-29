@@ -1,0 +1,52 @@
+GET {{host}}/protected/data/settings
+Content-Type: application/json
+Accept-Language: ru_RU
+X-PLUGIN-TOKEN: {{token}}
+
+###
+
+PUT {{host}}/protected/data/settings
+Content-Type: application/json
+Accept-Language: ru_RU
+X-PLUGIN-TOKEN: {{token}}
+
+{
+  "main": {
+    "headers": true,
+    "fields": [
+      "id",
+      "createdAt",
+      "updatedAt",
+      "data.addressFields.[field.name=address_one].value.city",
+      "cart.total"
+    ],
+    "format": [
+      "xlsx"
+    ]
+  }
+}
+
+###
+
+PUT {{host}}/protected/data/settings
+Content-Type: application/json
+Accept-Language: ru_RU
+X-PLUGIN-TOKEN: {{token}}
+
+{
+  "main": {
+    "headers": false,
+    "fields": [
+      "id",
+      "qwerty",
+      "createdAt",
+      "updatedAt",
+      "cart.totalPrice"
+    ],
+    "format": [
+      "xlsx", "xls"
+    ]
+  }
+}
+
+###
