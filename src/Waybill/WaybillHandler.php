@@ -13,16 +13,16 @@ use Leadvertex\Components\MoneyValue\MoneyValue;
 use Leadvertex\Plugin\Components\Form\Form;
 use Leadvertex\Plugin\Components\Form\FormData;
 use Leadvertex\Plugin\Components\Logistic\Exceptions\LogisticDataTooBigException;
-use Leadvertex\Plugin\Components\Logistic\Exceptions\NegativeLogisticPriceException;
-use Leadvertex\Plugin\Components\Logistic\Exceptions\ShippingTimeException;
+use Leadvertex\Plugin\Components\Logistic\Exceptions\NegativePriceException;
 use Leadvertex\Plugin\Components\Logistic\Logistic;
 use Leadvertex\Plugin\Components\Logistic\LogisticStatus;
-use Leadvertex\Plugin\Components\Logistic\Waybill\Delivery;
+use Leadvertex\Plugin\Components\Logistic\Waybill\DeliveryTerms;
+use Leadvertex\Plugin\Components\Logistic\Waybill\DeliveryType;
 use Leadvertex\Plugin\Components\Logistic\Waybill\Waybill;
 use Leadvertex\Plugin\Core\Logistic\Components\Waybill\Response\WaybillAddress;
 use Leadvertex\Plugin\Core\Logistic\Components\Waybill\Response\WaybillResponse;
 use Leadvertex\Plugin\Core\Logistic\Components\Waybill\WaybillHandlerInterface;
-use Leadvertex\Plugin\Instance\Logistic\Components\ValueObjectFactory;
+use XAKEPEHOK\ValueObjectBuilder\VOB;
 
 class WaybillHandler implements WaybillHandlerInterface
 {
@@ -32,26 +32,28 @@ class WaybillHandler implements WaybillHandlerInterface
      * @param FormData $data
      * @return WaybillResponse
      * @throws LogisticDataTooBigException
-     * @throws NegativeLogisticPriceException
-     * @throws ShippingTimeException
+     * @throws NegativePriceException
      */
     public function __invoke(Form $form, FormData $data): WaybillResponse
     {
-        $waybill = new Waybill();
-
         $price = null;
         if ($data->get('waybill.price') !== null) {
             $price = round($data->get('waybill.price', 0), 2) * 100;
             $price = new MoneyValue($price);
         }
 
-        $waybill->setPrice($price);
-        $waybill->setShippingTime($data->get('waybill.shippingTime.0'));
-        $waybill->setDelivery(ValueObjectFactory::buildOrNull(
-            Delivery::class,
-            $data->get('waybill.delivery')
-        ));
-        $waybill->setCod($data->get('waybill.delivery', false));
+        $terms = VOB::buildFromValues(
+            DeliveryTerms::class,
+            [$data->get('waybill.deliveryTerms_min.0'), $data->get('waybill.deliveryTerms_max.0')]
+        );
+
+        $waybill = new Waybill(
+            null,
+            $price,
+            $terms,
+            VOB::build(DeliveryType::class, $data->get('waybill.delivery')),
+            $data->get('waybill.cod')
+        );
 
         $logistic = new Logistic(
             $waybill,

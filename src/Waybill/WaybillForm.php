@@ -19,7 +19,8 @@ use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnumDefinition;
 use Leadvertex\Plugin\Components\Form\FieldDefinitions\StringDefinition;
 use Leadvertex\Plugin\Components\Form\FieldGroup;
 use Leadvertex\Plugin\Components\Form\Form;
-use Leadvertex\Plugin\Components\Logistic\Waybill\Delivery;
+use Leadvertex\Plugin\Components\Form\FormData;
+use Leadvertex\Plugin\Components\Logistic\Waybill\DeliveryType;
 use Leadvertex\Plugin\Components\Translations\Translator;
 use Leadvertex\Plugin\Instance\Logistic\Components\Validators\StringValidator;
 
@@ -47,18 +48,22 @@ class WaybillForm extends Form
                                 return $errors;
                             }
                         ),
-                        'shippingTime' => new ListOfEnumDefinition(
-                            'Срок доставки',
+                        'deliveryTerms_min' => new ListOfEnumDefinition(
+                            'Срок доставки (минимальный)',
                             null,
-                            function ($value) {
+                            function ($value, ListOfEnumDefinition $definition, FormData $data) {
                                 $errors = [];
 
                                 if ($value < 0) {
                                     $errors[] = Translator::get('waybill', 'Срок доставки не может быть меньше часа');
                                 }
 
-                                if ($value > 5000) {
+                                if ($value > 8760) {
                                     $errors[] = Translator::get('waybill', 'Срок доставки не может быть больше 5000 часов');
+                                }
+
+                                if ($value > $data->get('waybill.deliveryTerms_max')) {
+                                    $errors[] = Translator::get('waybill', 'Минимальный срок доставки не может превышать максимальный');
                                 }
 
                                 return $errors;
@@ -99,29 +104,85 @@ class WaybillForm extends Form
                             ]),
                             new Limit(1, 1)
                         ),
-                        'delivery' => new ListOfEnumDefinition(
+                        'deliveryTerms_max' => new ListOfEnumDefinition(
+                            'Срок доставки (максимальный)',
+                            null,
+                            function ($value, ListOfEnumDefinition $definition, FormData $data) {
+                                $errors = [];
+
+                                if ($value < 0) {
+                                    $errors[] = Translator::get('waybill', 'Срок доставки не может быть меньше часа');
+                                }
+
+                                if ($value > 8760) {
+                                    $errors[] = Translator::get('waybill', 'Срок доставки не может быть больше 5000 часов');
+                                }
+
+                                if ($value < $data->get('waybill.deliveryTerms_min')) {
+                                    $errors[] = Translator::get('waybill', 'Минимальный срок доставки не может превышать максимальный');
+                                }
+
+                                return $errors;
+                            },
+                            new StaticValues([
+                                1 => [
+                                    'title' => Translator::get('waybill', '1 час'),
+                                    'group' => Translator::get('waybill', 'В часах'),
+                                ],
+                                6 => [
+                                    'title' => Translator::get('waybill', '6 часов'),
+                                    'group' => Translator::get('waybill', 'В часах'),
+                                ],
+                                12 => [
+                                    'title' => Translator::get('waybill', '12 часов'),
+                                    'group' => Translator::get('waybill', 'В часах'),
+                                ],
+                                24 => [
+                                    'title' => Translator::get('waybill', '1 день'),
+                                    'group' => Translator::get('waybill', 'В днях'),
+                                ],
+                                24 * 3 => [
+                                    'title' => Translator::get('waybill', '3 дня'),
+                                    'group' => Translator::get('waybill', 'В днях'),
+                                ],
+                                24 * 7 => [
+                                    'title' => Translator::get('waybill', '7 дней'),
+                                    'group' => Translator::get('waybill', 'В днях'),
+                                ],
+                                24 * 14 => [
+                                    'title' => Translator::get('waybill', '14 дней'),
+                                    'group' => Translator::get('waybill', 'В днях'),
+                                ],
+                                24 * 30 => [
+                                    'title' => Translator::get('waybill', '30 дней'),
+                                    'group' => Translator::get('waybill', 'В днях'),
+                                ],
+                            ]),
+                            new Limit(1, 1)
+                        ),
+                        'deliveryType' => new ListOfEnumDefinition(
                             Translator::get('waybill', 'Способ доставки'),
                             null,
                             function ($value) {
                                 $value = (int) $value;
                                 $errors = [];
 
-                                if (!Delivery::isValid($value)) {
+                                if (!DeliveryType::isValid($value)) {
                                     $errors[] = Translator::get('waybill', 'Неизвестный способ доставки');
                                 }
 
                                 return $errors;
                             },
                             new StaticValues([
-                                Delivery::SELF_PICKUP => [
+                                DeliveryType::SELF_PICKUP => [
                                     'title' => Translator::get('waybill', 'Самовывоз со склада'),
                                     'group' => Translator::get('waybill', 'Самовывоз'),
                                 ],
-                                Delivery::PICKUP_POINT => [
+                                DeliveryType::PICKUP_POINT => [
                                     'title' => Translator::get('waybill', 'Самовывоз с пункта выдачи заказов'),
                                     'group' => Translator::get('waybill', 'Самовывоз'),
                                 ],
-                                Delivery::COURIER => [
+                                DeliveryType::COURIER => [
                                     'title' => Translator::get('waybill', 'Курьерская доставка'),
                                     'group' => Translator::get('waybill', 'Курьер'),
                                 ],
