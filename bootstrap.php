@@ -33,7 +33,7 @@ UploadAction::config([]);
 
 # 4. Configure info about plugin
 Info::config(
-    new PluginType(PluginType::MACROS),
+    new PluginType(PluginType::LOGISTIC),
     fn() => Translator::get('info', 'Plugin name'),
     fn() => Translator::get('info', 'Plugin markdown description'),
     ["country" => "RU"],
