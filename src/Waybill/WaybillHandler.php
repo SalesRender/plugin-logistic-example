@@ -51,14 +51,13 @@ class WaybillHandler implements WaybillHandlerInterface
             null,
             $price,
             $terms,
-            VOB::build(DeliveryType::class, $data->get('waybill.delivery')),
+            VOB::build(DeliveryType::class, $data->get('waybill.deliveryType')),
             $data->get('waybill.cod')
         );
 
         $logistic = new Logistic(
             $waybill,
-            new LogisticStatus(LogisticStatus::CREATED),
-            $data->get('service')
+            new LogisticStatus(LogisticStatus::CREATED)
         );
 
         return new WaybillResponse(
