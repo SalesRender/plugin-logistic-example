@@ -63,7 +63,7 @@ class WaybillForm extends Form
                                     $errors[] = Translator::get('waybill', 'Срок доставки не может быть больше 8760 часов');
                                 }
 
-                                if ($value > $data->get('waybill.deliveryTerms_max')) {
+                                if ($value > $data->get('waybill.deliveryTerms_max.0')) {
                                     $errors[] = Translator::get('waybill', 'Минимальный срок доставки не может превышать максимальный');
                                 }
 
@@ -120,7 +120,7 @@ class WaybillForm extends Form
                                     $errors[] = Translator::get('waybill', 'Срок доставки не может быть больше 8760 часов');
                                 }
 
-                                if ($value < $data->get('waybill.deliveryTerms_min')) {
+                                if ($value < $data->get('waybill.deliveryTerms_min.0')) {
                                     $errors[] = Translator::get('waybill', 'Минимальный срок доставки не может превышать максимальный');
                                 }
 
@@ -166,7 +166,7 @@ class WaybillForm extends Form
                             Translator::get('waybill', 'Способ доставки'),
                             null,
                             function ($value) {
-                                $value = (int) $value;
+                                $value = (int) $value[0] ?? null;
                                 $errors = [];
 
                                 if (!DeliveryType::isValid($value)) {

@@ -1,0 +1,22 @@
+PUT {{host}}/protected/data/waybill
+Content-Type: application/json
+Accept-Language: ru_RU
+X-PLUGIN-TOKEN: {{token}}
+
+{
+  "waybill": {
+    "price": 100500,
+    "deliveryTerms_min": [12],
+    "deliveryTerms_max": [24],
+    "deliveryType": [300],
+    "cod": true
+  },
+  "address": {
+    "field": ["address_one"],
+    "postcode": "357202",
+    "region": "Ставропольский край",
+    "city": "Минеральыне Воды",
+    "address_1": "Карла Маркса 69",
+    "address_2": "кв 53"
+  }
+}
