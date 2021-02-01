@@ -52,6 +52,7 @@ class WaybillForm extends Form
                             'Срок доставки (минимальный)',
                             null,
                             function ($value, ListOfEnumDefinition $definition, FormData $data) {
+                                $value = $value[0] ?? null;
                                 $errors = [];
 
                                 if ($value < 0) {
@@ -59,7 +60,7 @@ class WaybillForm extends Form
                                 }
 
                                 if ($value > 8760) {
-                                    $errors[] = Translator::get('waybill', 'Срок доставки не может быть больше 5000 часов');
+                                    $errors[] = Translator::get('waybill', 'Срок доставки не может быть больше 8760 часов');
                                 }
 
                                 if ($value > $data->get('waybill.deliveryTerms_max')) {
@@ -108,6 +109,7 @@ class WaybillForm extends Form
                             'Срок доставки (максимальный)',
                             null,
                             function ($value, ListOfEnumDefinition $definition, FormData $data) {
+                                $value = $value[0] ?? null;
                                 $errors = [];
 
                                 if ($value < 0) {
@@ -115,7 +117,7 @@ class WaybillForm extends Form
                                 }
 
                                 if ($value > 8760) {
-                                    $errors[] = Translator::get('waybill', 'Срок доставки не может быть больше 5000 часов');
+                                    $errors[] = Translator::get('waybill', 'Срок доставки не может быть больше 8760 часов');
                                 }
 
                                 if ($value < $data->get('waybill.deliveryTerms_min')) {
@@ -237,17 +239,6 @@ class WaybillForm extends Form
                             Translator::get('address', 'Адрес 1'),
                             null,
                             new StringValidator(0, 200, true),
-                        ),
-                    ]
-                ),
-                'service' => new FieldGroup(
-                    Translator::get('waybill', 'Служебные'),
-                    Translator::get('waybill', 'Проверка записи служебных значений плагина'),
-                    [
-                        'data' => new StringDefinition(
-                            Translator::get('waybill', 'значение'),
-                            null,
-                            new StringValidator(0, 255, true),
                         ),
                     ]
                 ),
