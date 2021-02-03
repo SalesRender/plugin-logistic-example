@@ -5,6 +5,7 @@ X-PLUGIN-TOKEN: {{token}}
 
 {
   "waybill": {
+    "track": "RU0123456789RU",
     "price": 100500,
     "deliveryTerms_min": [12],
     "deliveryTerms_max": [24],

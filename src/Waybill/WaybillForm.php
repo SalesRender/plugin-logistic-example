@@ -41,7 +41,20 @@ class WaybillForm extends Form
                         'track' => new StringDefinition(
                             Translator::get('waybill', 'Трек номер отправления'),
                             null,
-                            new StringValidator(1, 16, true),
+                            function ($value, FieldDefinition $definition, FormData $data) {
+                                $errors = [];
+
+                                if ($value === null) {
+                                    return $errors;
+                                }
+
+                                if (!preg_match('~^[a-z\d\-_]{6,25}$~ui', $value)) {
+                                    $errors[] = "Трек может содержать только символы A-Z, 0-9, тире и подчеркивание");
+                                }
+
+                                $stringValidator = new StringValidator(6, 25);
+                                return array_merge($errors, $stringValidator($value, $definition, $data));
+                            },
                         ),
                         'price' => new FloatDefinition(
                             Translator::get('waybill', 'Стоимость доставки'),
@@ -60,6 +73,11 @@ class WaybillForm extends Form
                             function ($value, ListOfEnumDefinition $definition, FormData $data) {
                                 $value = $value[0] ?? null;
                                 $errors = [];
+
+                                if (is_null($data->get('waybill.deliveryTerms_min.0')) || is_null($data->get('waybill.deliveryTerms_min.0'))) {
+                                    $errors[] = 'Должны быть указаны оба срока доставки или ни одного';
+                                    return $errors;
+                                }
 
                                 if ($value < 0) {
                                     $errors[] = Translator::get('waybill', 'Срок доставки не может быть меньше часа');
@@ -118,6 +136,11 @@ class WaybillForm extends Form
                                 $value = $value[0] ?? null;
                                 $errors = [];
 
+                                if (is_null($data->get('waybill.deliveryTerms_min.0')) || is_null($data->get('waybill.deliveryTerms_min.0'))) {
+                                    $errors[] = 'Должны быть указаны оба срока доставки или ни одного';
+                                    return $errors;
+                                }
+
                                 if ($value < 0) {
                                     $errors[] = Translator::get('waybill', 'Срок доставки не может быть меньше часа');
                                 }
@@ -174,6 +197,10 @@ class WaybillForm extends Form
                             function ($value) {
                                 $value = (int) $value[0] ?? null;
                                 $errors = [];
+
+                                if (is_null($value)) {
+                                    return $errors;
+                                }
 
                                 if (!DeliveryType::isValid($value)) {
                                     $errors[] = Translator::get('waybill', 'Неизвестный способ доставки');
