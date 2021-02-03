@@ -12,6 +12,7 @@ use Leadvertex\Plugin\Addon\EnumFields\FieldsValidator;
 use Leadvertex\Plugin\Addon\EnumFields\FieldsValues;
 use Leadvertex\Plugin\Addon\EnumFields\FieldTypesRegistry;
 use Leadvertex\Plugin\Components\Form\FieldDefinitions\BooleanDefinition;
+use Leadvertex\Plugin\Components\Form\FieldDefinitions\FieldDefinition;
 use Leadvertex\Plugin\Components\Form\FieldDefinitions\FloatDefinition;
 use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Limit;
 use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Values\StaticValues;
@@ -37,6 +38,11 @@ class WaybillForm extends Form
                     Translator::get('waybill', 'Доставка'),
                     null,
                     [
+                        'track' => new StringDefinition(
+                            Translator::get('waybill', 'Трек номер отправления'),
+                            null,
+                            new StringValidator(1, 16, true),
+                        ),
                         'price' => new FloatDefinition(
                             Translator::get('waybill', 'Стоимость доставки'),
                             null,

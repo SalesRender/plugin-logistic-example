@@ -18,6 +18,7 @@ use Leadvertex\Plugin\Components\Logistic\Logistic;
 use Leadvertex\Plugin\Components\Logistic\LogisticStatus;
 use Leadvertex\Plugin\Components\Logistic\Waybill\DeliveryTerms;
 use Leadvertex\Plugin\Components\Logistic\Waybill\DeliveryType;
+use Leadvertex\Plugin\Components\Logistic\Waybill\Track;
 use Leadvertex\Plugin\Components\Logistic\Waybill\Waybill;
 use Leadvertex\Plugin\Core\Logistic\Components\Waybill\Response\WaybillAddress;
 use Leadvertex\Plugin\Core\Logistic\Components\Waybill\Response\WaybillResponse;
@@ -36,6 +37,11 @@ class WaybillHandler implements WaybillHandlerInterface
      */
     public function __invoke(Form $form, FormData $data): WaybillResponse
     {
+        $track = null;
+        if ($data->get('waybill.track') !== null) {
+            $track = new Track($data->get('waybill.track'));
+        }
+
         $price = null;
         if ($data->get('waybill.price') !== null) {
             $price = round($data->get('waybill.price', 0), 2) * 100;
@@ -48,7 +54,7 @@ class WaybillHandler implements WaybillHandlerInterface
         );
 
         $waybill = new Waybill(
-            null,
+            $track,
             $price,
             $terms,
             VOB::build(DeliveryType::class, $data->get('waybill.deliveryType.0')),
