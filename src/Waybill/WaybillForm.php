@@ -49,7 +49,7 @@ class WaybillForm extends Form
                                 }
 
                                 if (!preg_match('~^[a-z\d\-_]{6,25}$~ui', $value)) {
-                                    $errors[] = "Трек может содержать только символы A-Z, 0-9, тире и подчеркивание");
+                                    $errors[] = "Трек может содержать только символы A-Z, 0-9, тире и подчеркивание";
                                 }
 
                                 $stringValidator = new StringValidator(6, 25);
