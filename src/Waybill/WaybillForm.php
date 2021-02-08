@@ -21,8 +21,8 @@ use Leadvertex\Plugin\Components\Form\FieldDefinitions\StringDefinition;
 use Leadvertex\Plugin\Components\Form\FieldGroup;
 use Leadvertex\Plugin\Components\Form\Form;
 use Leadvertex\Plugin\Components\Form\FormData;
-use Leadvertex\Plugin\Components\Logistic\Waybill\DeliveryType;
 use Leadvertex\Plugin\Components\Translations\Translator;
+use Leadvertex\Plugin\Instance\Logistic\Components\Fields\DeliveryTypeField;
 use Leadvertex\Plugin\Instance\Logistic\Components\Validators\StringValidator;
 
 class WaybillForm extends Form
@@ -191,43 +191,7 @@ class WaybillForm extends Form
                             ]),
                             new Limit(1, 1)
                         ),
-                        'deliveryType' => new ListOfEnumDefinition(
-                            Translator::get('waybill', 'Способ доставки'),
-                            null,
-                            function ($value) {
-                                $errors = [];
-                                if (is_null($value)) {
-                                    return $errors;
-                                }
-
-                                $value = (int) $value[0] ?? null;
-
-                                if (is_null($value)) {
-                                    return $errors;
-                                }
-
-                                if (!DeliveryType::isValid($value)) {
-                                    $errors[] = Translator::get('waybill', 'Неизвестный способ доставки');
-                                }
-
-                                return $errors;
-                            },
-                            new StaticValues([
-                                DeliveryType::SELF_PICKUP => [
-                                    'title' => Translator::get('waybill', 'Самовывоз со склада'),
-                                    'group' => Translator::get('waybill', 'Самовывоз'),
-                                ],
-                                DeliveryType::PICKUP_POINT => [
-                                    'title' => Translator::get('waybill', 'Самовывоз с пункта выдачи заказов'),
-                                    'group' => Translator::get('waybill', 'Самовывоз'),
-                                ],
-                                DeliveryType::COURIER => [
-                                    'title' => Translator::get('waybill', 'Курьерская доставка'),
-                                    'group' => Translator::get('waybill', 'Курьер'),
-                                ],
-                            ]),
-                            new Limit(1, 1)
-                        ),
+                        'deliveryType' => new DeliveryTypeField(),
                         'cod' => new BooleanDefinition(
                             'Оплата при получении',
                             null,

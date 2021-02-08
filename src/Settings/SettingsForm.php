@@ -13,6 +13,7 @@ use Leadvertex\Plugin\Components\Form\FieldDefinitions\StringDefinition;
 use Leadvertex\Plugin\Components\Form\FieldGroup;
 use Leadvertex\Plugin\Components\Form\Form;
 use Leadvertex\Plugin\Components\Translations\Translator;
+use Leadvertex\Plugin\Instance\Logistic\Components\FieldGroups\SenderFieldGroup;
 
 class SettingsForm extends Form
 {
@@ -42,7 +43,10 @@ class SettingsForm extends Form
                             }
                         ),
                     ]
-                )
+                ),
+                'sender_1' => new SenderFieldGroup(1),
+                'sender_2' => new SenderFieldGroup(2),
+                'sender_3' => new SenderFieldGroup(3),
             ],
             Translator::get('settings', 'Сохранить'),
         );

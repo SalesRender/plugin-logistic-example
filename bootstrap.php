@@ -5,6 +5,7 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
+use Leadvertex\Plugin\Components\Batch\BatchContainer;
 use Leadvertex\Plugin\Components\Db\Components\Connector;
 use Leadvertex\Plugin\Components\Info\Developer;
 use Leadvertex\Plugin\Components\Info\Info;
@@ -13,6 +14,8 @@ use Leadvertex\Plugin\Components\Settings\Settings;
 use Leadvertex\Plugin\Components\Translations\Translator;
 use Leadvertex\Plugin\Core\Actions\UploadAction;
 use Leadvertex\Plugin\Core\Logistic\Components\Waybill\WaybillContainer;
+use Leadvertex\Plugin\Instance\Logistic\Batch\Batch_1;
+use Leadvertex\Plugin\Instance\Logistic\Batch\BatchShippingHandler;
 use Leadvertex\Plugin\Instance\Logistic\Settings\SettingsForm;
 use Leadvertex\Plugin\Instance\Logistic\Waybill\WaybillForm;
 use Leadvertex\Plugin\Instance\Logistic\Waybill\WaybillHandler;
@@ -34,11 +37,11 @@ UploadAction::config([]);
 # 4. Configure info about plugin
 Info::config(
     new PluginType(PluginType::LOGISTIC),
-    fn() => Translator::get('info', 'Plugin name'),
-    fn() => Translator::get('info', 'Plugin markdown description'),
+    fn() => Translator::get('info', 'Example logistic'),
+    fn() => Translator::get('info', 'Example **logistic** description'),
     ["country" => "RU"],
     new Developer(
-        'Your (company) name',
+        'Example company',
         'support.for.plugin@example.com',
         'example.com',
     )
@@ -57,17 +60,15 @@ Settings::setForm(fn() => new SettingsForm());
 //});
 
 # 7. Configure batch forms and handler (or remove this block if dont used)
-//BatchContainer::config(
-//    function (int $number) {
-//    switch ($number) {
-//        case 1: return new Form();
-//        case 2: return new Form();
-//        case 3: return new Form();
-//        default: return null;
-//    }
-//    },
-//    new BatchHandlerInterface()
-//);
+BatchContainer::config(
+    function (int $number) {
+        switch ($number) {
+            case 1: return new Batch_1();
+            default: return null;
+        }
+    },
+    new BatchShippingHandler()
+);
 
 # 8. Configure waybill form and handler
 WaybillContainer::config(
