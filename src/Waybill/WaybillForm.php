@@ -195,8 +195,12 @@ class WaybillForm extends Form
                             Translator::get('waybill', 'Способ доставки'),
                             null,
                             function ($value) {
-                                $value = (int) $value[0] ?? null;
                                 $errors = [];
+                                if (is_null($value)) {
+                                    return $errors;
+                                }
+
+                                $value = (int) $value[0] ?? null;
 
                                 if (is_null($value)) {
                                     return $errors;
