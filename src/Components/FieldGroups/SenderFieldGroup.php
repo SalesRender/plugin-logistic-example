@@ -62,7 +62,6 @@ class SenderFieldGroup extends FieldGroup
                 'name' => new StringDefinition(
                     Translator::get('sender', 'Название компании'),
                     Translator::get('sender', 'Например "ООО Логистика"'),
-                    null,
                     function ($value, StringDefinition $definition, FormData $data) {
                         $errors = [];
 
