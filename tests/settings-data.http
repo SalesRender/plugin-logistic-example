@@ -12,17 +12,18 @@ X-PLUGIN-TOKEN: {{token}}
 
 {
   "main": {
-    "headers": true,
-    "fields": [
-      "id",
-      "createdAt",
-      "updatedAt",
-      "data.addressFields.[field.name=address_one].value.city",
-      "cart.total"
-    ],
-    "format": [
-      "xlsx"
-    ]
+    "login": "user",
+    "password": "hello-world"
+  },
+  "sender_1": {
+    "use": true,
+    "name": "Logistic LTD",
+    "INN": 12345678
+  },
+  "sender_2": {
+    "use": null,
+    "name": null,
+    "INN": null
   }
 }
 
@@ -35,17 +36,18 @@ X-PLUGIN-TOKEN: {{token}}
 
 {
   "main": {
-    "headers": false,
-    "fields": [
-      "id",
-      "qwerty",
-      "createdAt",
-      "updatedAt",
-      "cart.totalPrice"
-    ],
-    "format": [
-      "xlsx", "xls"
-    ]
+    "login": "user",
+    "password": "hello-world"
+  },
+  "sender_1": {
+    "use": false,
+    "name": "Logistic LTD",
+    "INN": 12345678
+  },
+  "sender_2": {
+    "use": null,
+    "name": null,
+    "INN": null
   }
 }
 
