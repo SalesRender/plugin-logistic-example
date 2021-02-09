@@ -36,8 +36,10 @@ class BatchShippingHandler implements BatchHandlerInterface
                     'shipping' => [
                         'id',
                     ],
-                    'plugin' => [
-                        'id',
+                    'logistic' => [
+                        'plugin' => [
+                            'id',
+                        ],
                     ],
                 ],
             ],
@@ -87,7 +89,7 @@ class BatchShippingHandler implements BatchHandlerInterface
             $signed = Registration::find()->getOutputToken([
                 'shippingId' => $shippingId,
                 'orders' => $data
-            ]);
+            ], 60 * 10);
 
             $inputToken = $batch->getToken()->getInputToken();
             $uri = (new Path($inputToken->getClaim('iss')))
@@ -176,7 +178,7 @@ class BatchShippingHandler implements BatchHandlerInterface
             'shippingId' => $shippingId,
             'status' => "completed",
             'orders' => $process->getHandledCount()
-        ]);
+        ], 60 * 10);
 
         try {
             $response = Guzzle::getInstance()->post(
@@ -200,7 +202,6 @@ class BatchShippingHandler implements BatchHandlerInterface
     private function createShipping(Batch $batch): int
     {
         $token = $batch->getToken()->getInputToken();
-
         $uri = (new Path($token->getClaim('iss')))
             ->down('companies')
             ->down($token->getClaim('cid'))
@@ -210,7 +211,7 @@ class BatchShippingHandler implements BatchHandlerInterface
             (string) $uri,
             [
                 'headers' => [
-                    'X-PLUGIN-TOKEN' => (string) $token,
+                    'X-PLUGIN-TOKEN' => (string) $batch->getToken()->getOutputToken(),
                 ],
                 'json' => [],
             ],

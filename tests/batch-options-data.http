@@ -4,9 +4,9 @@ Accept-Language: ru_RU
 X-PLUGIN-TOKEN: {{token}}
 
 {
-  "options": {
-    "format": [
-      "csv"
+  "sender": {
+    "company": [
+      "1"
     ]
   }
 }

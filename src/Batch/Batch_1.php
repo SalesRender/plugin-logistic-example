@@ -48,7 +48,7 @@ class Batch_1 extends Form
 
                                 $value = $value[0] ?? 0;
 
-                                if (!isset($definition->getValues()[$value])) {
+                                if (!isset($definition->getValues()->get()[$value])) {
                                     $errors[] = Translator::get('batch', 'Отправитель не включен или не настроен');
                                 }
 
