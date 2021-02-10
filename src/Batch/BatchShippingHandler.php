@@ -100,7 +100,7 @@ class BatchShippingHandler implements BatchHandlerInterface
                 ->down('orders');
 
             try {
-                $response = Guzzle::getInstance()->post(
+                $response = Guzzle::getInstance()->patch(
                     (string) $uri,
                     ['json' => ['request' => (string) $signed]],
                 );
