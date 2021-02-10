@@ -86,23 +86,25 @@ class BatchShippingHandler implements BatchHandlerInterface
                 ];
             }
 
-            $signed = Registration::find()->getOutputToken([
-                'shippingId' => $shippingId,
-                'orders' => $data
-            ], 60 * 10);
-
-            $inputToken = $batch->getToken()->getInputToken();
-            $uri = (new Path($inputToken->getClaim('iss')))
-                ->down('companies')
-                ->down($inputToken->getClaim('cid'))
-                ->down('CRM/plugin/logistic/shipping')
-                ->down($shippingId)
-                ->down('orders');
 
             try {
-                $response = Guzzle::getInstance()->patch(
-                    (string) $uri,
-                    ['json' => ['request' => (string) $signed]],
+
+                $inputToken = $batch->getToken()->getInputToken();
+                $uri = (new Path($inputToken->getClaim('iss')))
+                    ->down('companies')
+                    ->down($inputToken->getClaim('cid'))
+                    ->down('CRM/plugin/logistic/shipping')
+                    ->down($shippingId)
+                    ->down('orders');
+
+                $response = Registration::find()->makeSpecialRequest(
+                    'PATCH',
+                    $uri,
+                    [
+                        'shippingId' => $shippingId,
+                        'orders' => $data,
+                    ],
+                    60 * 10
                 );
 
                 if ($response->getStatusCode() !== 200) {
@@ -167,23 +169,23 @@ class BatchShippingHandler implements BatchHandlerInterface
             $this->handled[$id] = $order;
         }
 
-        $inputToken = $batch->getToken()->getInputToken();
-        $uri = (new Path($inputToken->getClaim('iss')))
-            ->down('companies')
-            ->down($inputToken->getClaim('cid'))
-            ->down('CRM/plugin/logistic/shipping')
-            ->down($shippingId);
-
-        $signed = Registration::find()->getOutputToken([
-            'shippingId' => $shippingId,
-            'status' => "completed",
-            'orders' => $process->getHandledCount()
-        ], 60 * 10);
-
         try {
-            $response = Guzzle::getInstance()->post(
-                (string) $uri,
-                ['json' => ['request' => (string) $signed]],
+            $inputToken = $batch->getToken()->getInputToken();
+            $uri = (new Path($inputToken->getClaim('iss')))
+                ->down('companies')
+                ->down($inputToken->getClaim('cid'))
+                ->down('CRM/plugin/logistic/shipping')
+                ->down($shippingId);
+
+            $response = Registration::find()->makeSpecialRequest(
+                'POST',
+                $uri,
+                [
+                    'shippingId' => $shippingId,
+                    'status' => "completed",
+                    'orders' => $process->getHandledCount(),
+                ],
+                60 * 10
             );
 
             if ($response->getStatusCode() !== 202) {
