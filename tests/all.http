@@ -1,0 +1,59 @@
+PUT {{host}}/protected/data/settings
+Content-Type: application/json
+Accept-Language: ru_RU
+X-PLUGIN-TOKEN: {{token}}
+
+{
+  "main": {
+    "login": "user",
+    "password": "hello-world"
+  },
+  "sender_1": {
+    "use": true,
+    "name": "Logistic LTD",
+    "INN": 12345678
+  },
+  "sender_2": {
+    "use": null,
+    "name": null,
+    "INN": null
+  }
+}
+
+###
+
+POST {{host}}/protected/batch/prepare
+Content-Type: application/json
+Accept-Language: ru_RU
+X-PLUGIN-TOKEN: {{token}}
+
+{
+  "filters": {"ids": ["1", "2", "3", "4", "11", "111"]},
+  "sort": {"field": "id", "direction": "ASC"}
+}
+
+###
+
+PUT {{host}}/protected/data/batch/1
+Content-Type: application/json
+Accept-Language: ru_RU
+X-PLUGIN-TOKEN: {{token}}
+
+{
+  "sender": {
+    "company": [
+      "1"
+    ]
+  }
+}
+
+###
+
+POST {{host}}/protected/batch/run
+Content-Type: application/json
+Accept-Language: ru_RU
+X-PLUGIN-TOKEN: {{token}}
+
+###
+
+GET {{host}}/process?id={{id}}&companyId=1
