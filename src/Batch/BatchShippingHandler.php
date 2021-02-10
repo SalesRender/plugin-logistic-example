@@ -12,8 +12,6 @@ use Adbar\Dot;
 use Exception;
 use Leadvertex\Plugin\Components\Access\Registration\Registration;
 use Leadvertex\Plugin\Components\Batch\Batch;
-use Leadvertex\Plugin\Components\Batch\BatchHandlerInterface;
-use Leadvertex\Plugin\Components\Guzzle\Guzzle;
 use Leadvertex\Plugin\Components\Logistic\LogisticStatus;
 use Leadvertex\Plugin\Components\Logistic\Waybill\DeliveryType;
 use Leadvertex\Plugin\Components\Process\Components\Error;
@@ -21,9 +19,8 @@ use Leadvertex\Plugin\Components\Process\Process;
 use Leadvertex\Plugin\Components\Translations\Translator;
 use Leadvertex\Plugin\Instance\Logistic\Components\OrderFetcherIterator;
 use RuntimeException;
-use XAKEPEHOK\Path\Path;
 
-class BatchShippingHandler implements BatchHandlerInterface
+class BatchShippingHandler extends \Leadvertex\Plugin\Core\Logistic\Components\BatchShippingHandler
 {
     private array $handled;
 
@@ -86,27 +83,8 @@ class BatchShippingHandler implements BatchHandlerInterface
                 ];
             }
 
-
             try {
-
-                $inputToken = $batch->getToken()->getInputToken();
-                $uri = (new Path($inputToken->getClaim('iss')))
-                    ->down('companies')
-                    ->down($inputToken->getClaim('cid'))
-                    ->down('CRM/plugin/logistic/shipping')
-                    ->down($shippingId)
-                    ->down('orders');
-
-                $response = Registration::find()->makeSpecialRequest(
-                    'PATCH',
-                    $uri,
-                    [
-                        'shippingId' => $shippingId,
-                        'orders' => $data,
-                    ],
-                    60 * 10
-                );
-
+                $response = $this->addOrders($batch, $shippingId, $data);
                 if ($response->getStatusCode() !== 200) {
                     throw new RuntimeException('Invalid response code', 9200);
                 }
@@ -131,7 +109,7 @@ class BatchShippingHandler implements BatchHandlerInterface
 
         foreach ($orderIterator as $id => $orderData) {
             $order = new Dot($orderData);
-            $isSuccessLocked = $this->lockOrder(60 * 60, $order, $batch);
+            $isSuccessLocked = $this->lockOrder(60 * 60, $id, $batch);
 
             if (!$isSuccessLocked) {
                 $process->skip();
@@ -170,24 +148,7 @@ class BatchShippingHandler implements BatchHandlerInterface
         }
 
         try {
-            $inputToken = $batch->getToken()->getInputToken();
-            $uri = (new Path($inputToken->getClaim('iss')))
-                ->down('companies')
-                ->down($inputToken->getClaim('cid'))
-                ->down('CRM/plugin/logistic/shipping')
-                ->down($shippingId);
-
-            $response = Registration::find()->makeSpecialRequest(
-                'POST',
-                $uri,
-                [
-                    'shippingId' => $shippingId,
-                    'status' => "completed",
-                    'orders' => $process->getHandledCount(),
-                ],
-                60 * 10
-            );
-
+            $response = $this->markAsCompleted($batch, $shippingId, $process->getHandledCount());
             if ($response->getStatusCode() !== 202) {
                 throw new RuntimeException('Invalid shipping complete code', 9202);
             }
@@ -195,61 +156,12 @@ class BatchShippingHandler implements BatchHandlerInterface
             $process->finish(true);
         } catch (Exception $exception) {
             $process->finish(false);
+            try {
+                $this->markAsFailed($batch, $shippingId);
+            } catch (Exception $exception) {}
         } finally {
             $process->save();
         }
     }
 
-
-    private function createShipping(Batch $batch): int
-    {
-        $token = $batch->getToken()->getInputToken();
-        $uri = (new Path($token->getClaim('iss')))
-            ->down('companies')
-            ->down($token->getClaim('cid'))
-            ->down('CRM/plugin/logistic/shipping');
-
-        $response = Guzzle::getInstance()->post(
-            (string) $uri,
-            [
-                'headers' => [
-                    'X-PLUGIN-TOKEN' => (string) $batch->getToken()->getOutputToken(),
-                ],
-                'json' => [],
-            ],
-        );
-
-        if ($response->getStatusCode() !== 201) {
-            throw new RuntimeException('Invalid response code', 100);
-        }
-
-        $data = json_decode($response->getBody()->getContents(), true);
-
-        if (!isset($data['shippingId'])) {
-            throw new RuntimeException('Invalid response', 200);
-        }
-
-        return $data['shippingId'];
-    }
-
-
-    private function lockOrder(int $timeout, Dot $order, Batch $batch): bool
-    {
-        $client = $batch->getApiClient();
-
-        $query = '
-            mutation($id: ID!, $timeout: Int!) {
-              orderMutation {
-                lockOrder(input: {id: $id, timeout: $timeout})
-              }
-            }
-        ';
-
-        $response = new Dot($client->query($query, [
-            'id' => $order['id'],
-            'timeout' => $timeout,
-        ])->getData());
-
-        return $response->get('orderMutation.lockOrder', false);
-    }
 }
