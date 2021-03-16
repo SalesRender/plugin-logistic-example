@@ -148,7 +148,7 @@ class BatchShippingHandler extends \Leadvertex\Plugin\Core\Logistic\Components\B
         }
 
         try {
-            $response = $this->markAsCompleted($batch, $shippingId, $process->getHandledCount());
+            $response = $this->markAsExported($batch, $shippingId, $process->getHandledCount());
             if ($response->getStatusCode() !== 202) {
                 throw new RuntimeException('Invalid shipping complete code', 9202);
             }
