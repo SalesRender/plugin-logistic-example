@@ -41,7 +41,9 @@ class BatchShippingHandler extends \Leadvertex\Plugin\Core\Logistic\Components\B
                 ],
             ],
             $batch->getApiClient(),
-            $batch->getFsp()
+            $batch->getFsp(),
+            true,
+            $batch->getArguments()['limit'] ?? null
         );
 
         $process->initialize(count($orderIterator));
