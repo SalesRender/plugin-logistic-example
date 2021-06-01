@@ -63,7 +63,7 @@ class BatchShippingHandler extends \Leadvertex\Plugin\Core\Logistic\Components\B
         $orderIterator->setOnAfterBatch(function (array $orders) use ($batch, $shippingId, $process) {
             $data = [];
             foreach ($orders as $id => $order) {
-                $data[$id] = [
+                $data[$order['id']] = [
                     'waybill' => [
                         'price' => rand(100, 350) * 100,
                         'track' => "TN" . rand(10000000, 99999999) . substr(strtoupper(md5(random_bytes(16))), 0, 2),
