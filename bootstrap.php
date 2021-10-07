@@ -33,7 +33,7 @@ Connector::config(new Medoo([
 Translator::config('ru_RU');
 
 # 3. Set permitted file extensions (* for any ext) and max sizes (in bytes). Pass empty array for disable file uploading
-UploadersContainer::config(new LocalUploadAction([]));
+UploadersContainer::addDefaultUploader(new LocalUploadAction([]));
 
 # 4. Configure info about plugin
 Info::config(
