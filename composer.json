@@ -18,7 +18,7 @@
   "require": {
     "php": ">=7.4.0",
     "ext-json": "*",
-    "leadvertex/plugin-core-logistic": "^0.1.0",
+    "leadvertex/plugin-core-logistic": "^0.2.0",
     "leadvertex/plugin-addon-enum-fields": "^0.2.0"
   }
 }

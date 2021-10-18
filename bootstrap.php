@@ -12,7 +12,8 @@ use Leadvertex\Plugin\Components\Info\Info;
 use Leadvertex\Plugin\Components\Info\PluginType;
 use Leadvertex\Plugin\Components\Settings\Settings;
 use Leadvertex\Plugin\Components\Translations\Translator;
-use Leadvertex\Plugin\Core\Actions\UploadAction;
+use Leadvertex\Plugin\Core\Actions\Upload\LocalUploadAction;
+use Leadvertex\Plugin\Core\Actions\Upload\UploadersContainer;
 use Leadvertex\Plugin\Core\Logistic\Components\Waybill\WaybillContainer;
 use Leadvertex\Plugin\Instance\Logistic\Batch\Batch_1;
 use Leadvertex\Plugin\Instance\Logistic\Batch\BatchShippingHandler;
@@ -32,7 +33,7 @@ Connector::config(new Medoo([
 Translator::config('ru_RU');
 
 # 3. Set permitted file extensions (* for any ext) and max sizes (in bytes). Pass empty array for disable file uploading
-UploadAction::config([]);
+UploadersContainer::addDefaultUploader(new LocalUploadAction([]));
 
 # 4. Configure info about plugin
 Info::config(
