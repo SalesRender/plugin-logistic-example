@@ -9,6 +9,7 @@ namespace Leadvertex\Plugin\Instance\Logistic\Waybill;
 
 
 use Leadvertex\Components\Address\Address;
+use Leadvertex\Components\Address\Location;
 use Leadvertex\Components\MoneyValue\MoneyValue;
 use Leadvertex\Plugin\Components\Form\Form;
 use Leadvertex\Plugin\Components\Form\FormData;
@@ -84,7 +85,7 @@ class WaybillHandler implements WaybillHandlerInterface
                     (string) $data->get('address.address_1'),
                     (string) $data->get('address.address_2'),
                     (string) $data->get('address.postcode'),
-                    (string) $data->get('address.country'),
+                    (string) $data->get('address.countryCode'),
                     $location
                 )
             )

@@ -243,7 +243,7 @@ class WaybillForm extends Form
                             null,
                             new StringValidator(0, 200, true),
                         ),
-                        'country' => new ListOfEnumDefinition(
+                        'countryCode' => new ListOfEnumDefinition(
                             Translator::get('address', 'Код страны'),
                             null,
                             function ($code) {
