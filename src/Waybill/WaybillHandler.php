@@ -66,6 +66,14 @@ class WaybillHandler implements WaybillHandlerInterface
             new LogisticStatus(LogisticStatus::CREATED)
         );
 
+        $location = null;
+        if ($data->get('address.location') !== null) {
+            $location = new Location(
+                $data->get('address.location.latitude'),
+                $data->get('address.location.longitude'),
+            );
+        }
+
         return new WaybillResponse(
             $logistic,
             new WaybillAddress(
@@ -76,6 +84,8 @@ class WaybillHandler implements WaybillHandlerInterface
                     (string) $data->get('address.address_1'),
                     (string) $data->get('address.address_2'),
                     (string) $data->get('address.postcode'),
+                    (string) $data->get('address.country'),
+                    $location
                 )
             )
         );

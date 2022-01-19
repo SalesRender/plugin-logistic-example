@@ -24,6 +24,8 @@ use Leadvertex\Plugin\Components\Form\FormData;
 use Leadvertex\Plugin\Components\Translations\Translator;
 use Leadvertex\Plugin\Instance\Logistic\Components\Fields\DeliveryTypeField;
 use Leadvertex\Plugin\Instance\Logistic\Components\Validators\StringValidator;
+use League\ISO3166\ISO3166;
+use Respect\Validation\Rules\CountryCode;
 
 class WaybillForm extends Form
 {
@@ -241,6 +243,43 @@ class WaybillForm extends Form
                             null,
                             new StringValidator(0, 200, true),
                         ),
+                        'country' => new ListOfEnumDefinition(
+                            Translator::get('address', 'Код страны'),
+                            null,
+                            function ($code) {
+                                $errors = [];
+
+                                if (!(new CountryCode())->validate($code)) {
+                                    $errors[] = Translator::get('code.validator', 'Код страны не верный');
+                                }
+
+                                return $errors;
+                            },
+                            new StaticValues($this->getCountriesList()),
+                            new Limit(1, 1),
+                        ),
+                        'location.latitude' => new FloatDefinition(
+                            Translator::get('location.latitude', 'Широта'),
+                            null,
+                            function ($value) {
+                                $errors = [];
+                                if ($value < -90 || $value > 90) {
+                                    $errors[] = Translator::get('location.latitude', 'Широта может быть от -90 до 90');
+                                }
+                                return $errors;
+                            }
+                        ),
+                        'location.longitude' => new FloatDefinition(
+                            Translator::get('location.longitude', 'Долгота'),
+                            null,
+                            function ($value) {
+                                $errors = [];
+                                if ($value < -180 || $value > 180) {
+                                    $errors[] = Translator::get('location.longitude', 'Долгота может быть от -180 до 180');
+                                }
+                                return $errors;
+                            }
+                        ),
                     ]
                 ),
             ],
@@ -248,4 +287,15 @@ class WaybillForm extends Form
         );
     }
 
+    private function getCountriesList(): array {
+        $iso = new ISO3166();
+        $values = [];
+        foreach ($iso->all() as $data) {
+            $values[$data['alpha2']] = [
+                'title' => Translator::get($data['alpha2'], $data['name']),
+                'group' => Translator::get('countries', 'Страны'),
+            ];
+        }
+        return $values;
+    }
 }
