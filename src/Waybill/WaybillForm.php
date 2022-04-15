@@ -248,7 +248,7 @@ class WaybillForm extends Form
                             null,
                             function ($code) {
                                 $errors = [];
-
+                                $code = (is_array($code)) ? $code[0] : $code;
                                 if (!(new CountryCode())->validate($code)) {
                                     $errors[] = Translator::get('code.validator', 'Код страны не верный');
                                 }
@@ -258,24 +258,24 @@ class WaybillForm extends Form
                             new StaticValues($this->getCountriesList()),
                             new Limit(1, 1),
                         ),
-                        'location.latitude' => new FloatDefinition(
-                            Translator::get('location.latitude', 'Широта'),
+                        'location_latitude' => new FloatDefinition(
+                            Translator::get('location_latitude', 'Широта'),
                             null,
                             function ($value) {
                                 $errors = [];
                                 if ($value < -90 || $value > 90) {
-                                    $errors[] = Translator::get('location.latitude', 'Широта может быть от -90 до 90');
+                                    $errors[] = Translator::get('location_latitude', 'Широта может быть от -90 до 90');
                                 }
                                 return $errors;
                             }
                         ),
-                        'location.longitude' => new FloatDefinition(
-                            Translator::get('location.longitude', 'Долгота'),
+                        'location_longitude' => new FloatDefinition(
+                            Translator::get('location_longitude', 'Долгота'),
                             null,
                             function ($value) {
                                 $errors = [];
                                 if ($value < -180 || $value > 180) {
-                                    $errors[] = Translator::get('location.longitude', 'Долгота может быть от -180 до 180');
+                                    $errors[] = Translator::get('location_longitude', 'Долгота может быть от -180 до 180');
                                 }
                                 return $errors;
                             }

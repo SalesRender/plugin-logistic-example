@@ -68,10 +68,10 @@ class WaybillHandler implements WaybillHandlerInterface
         );
 
         $location = null;
-        if ($data->get('address.location') !== null) {
+        if ($data->get('address.location_latitude') !== null && $data->get('address.location_longitude') !== null) {
             $location = new Location(
-                $data->get('address.location.latitude'),
-                $data->get('address.location.longitude'),
+                $data->get('address.location_latitude'),
+                $data->get('address.location_longitude'),
             );
         }
 
@@ -85,7 +85,7 @@ class WaybillHandler implements WaybillHandlerInterface
                     (string) $data->get('address.address_1'),
                     (string) $data->get('address.address_2'),
                     (string) $data->get('address.postcode'),
-                    (string) $data->get('address.countryCode'),
+                    (string) (is_array($data->get('address.countryCode'))) ? $data->get('address.countryCode.0') : $data->get('address.countryCode'),
                     $location
                 )
             )
