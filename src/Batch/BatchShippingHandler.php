@@ -119,7 +119,7 @@ class BatchShippingHandler extends \Leadvertex\Plugin\Core\Logistic\Components\B
                 continue;
             }
 
-            if ($order->get('shipping.id')) {
+            if ($order->get('shipping.id') && $order->get('shipping.id') != $shippingId) {
                 $process->addError(new Error(
                     Translator::get(
                         'batch',
@@ -132,13 +132,13 @@ class BatchShippingHandler extends \Leadvertex\Plugin\Core\Logistic\Components\B
                 continue;
             }
 
-            $pluginId = $order->get('plugin.id');
+            $pluginId = $order->get('logistic.plugin.id');
             if (!is_null($pluginId) && $pluginId !== Registration::find()->getId()) {
                 $process->addError(new Error(
                     Translator::get(
                         'batch',
                         'Заказ привязан к другому плагину логистики с id {pluginId}',
-                        ['pluginId' => $order->get('plugin.id')]
+                        ['pluginId' => $order->get('logistic.plugin.id')]
                     ),
                     $id
                 ));
