@@ -27,7 +27,7 @@ class DeliveryTypeField extends ListOfEnumDefinition
                     return $errors;
                 }
 
-                $value = (int) $value[0] ?? null;
+                $value = (string) $value[0] ?? null;
 
                 if (is_null($value)) {
                     return $errors;
