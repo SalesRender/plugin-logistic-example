@@ -79,7 +79,8 @@ class BatchShippingHandler extends \Leadvertex\Plugin\Core\Logistic\Components\B
                         return [
                             'code' => $code,
                             'text' => ucfirst(strtolower(LogisticStatus::code2strings()[$code])) . ' status',
-                            'timestamp' => time() - rand(100, 60 * 60 * 24 * 7)
+                            'timestamp' => time() - rand(100, 60 * 60 * 24 * 7),
+                            'office' => null,
                         ];
                     })(),
                 ];
