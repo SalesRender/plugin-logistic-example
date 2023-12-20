@@ -5,22 +5,22 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Instance\Logistic\Batch;
+namespace SalesRender\Plugin\Instance\Logistic\Batch;
 
 
 use Adbar\Dot;
 use Exception;
-use Leadvertex\Plugin\Components\Access\Registration\Registration;
-use Leadvertex\Plugin\Components\Batch\Batch;
-use Leadvertex\Plugin\Components\Logistic\LogisticStatus;
-use Leadvertex\Plugin\Components\Logistic\Waybill\DeliveryType;
-use Leadvertex\Plugin\Components\Batch\Process\Error;
-use Leadvertex\Plugin\Components\Batch\Process\Process;
-use Leadvertex\Plugin\Components\Translations\Translator;
-use Leadvertex\Plugin\Instance\Logistic\Components\OrderFetcherIterator;
+use SalesRender\Plugin\Components\Access\Registration\Registration;
+use SalesRender\Plugin\Components\Batch\Batch;
+use SalesRender\Plugin\Components\Logistic\LogisticStatus;
+use SalesRender\Plugin\Components\Logistic\Waybill\DeliveryType;
+use SalesRender\Plugin\Components\Batch\Process\Error;
+use SalesRender\Plugin\Components\Batch\Process\Process;
+use SalesRender\Plugin\Components\Translations\Translator;
+use SalesRender\Plugin\Instance\Logistic\Components\OrderFetcherIterator;
 use RuntimeException;
 
-class BatchShippingHandler extends \Leadvertex\Plugin\Core\Logistic\Components\BatchShippingHandler
+class BatchShippingHandler extends \SalesRender\Plugin\Core\Logistic\Components\BatchShippingHandler
 {
     private array $handled;
 

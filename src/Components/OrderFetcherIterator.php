@@ -5,10 +5,10 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Instance\Logistic\Components;
+namespace SalesRender\Plugin\Instance\Logistic\Components;
 
 
-use Leadvertex\Plugin\Components\ApiClient\ApiFetcherIterator;
+use SalesRender\Plugin\Components\ApiClient\ApiFetcherIterator;
 use XAKEPEHOK\ArrayGraphQL\ArrayGraphQL;
 
 class OrderFetcherIterator extends ApiFetcherIterator

@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-use Leadvertex\Plugin\Core\Logistic\Factories\ConsoleAppFactory;
+use SalesRender\Plugin\Core\Logistic\Factories\ConsoleAppFactory;
 
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/bootstrap.php';

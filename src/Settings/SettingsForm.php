@@ -5,15 +5,15 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Instance\Logistic\Settings;
+namespace SalesRender\Plugin\Instance\Logistic\Settings;
 
 
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\PasswordDefinition;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\StringDefinition;
-use Leadvertex\Plugin\Components\Form\FieldGroup;
-use Leadvertex\Plugin\Components\Form\Form;
-use Leadvertex\Plugin\Components\Translations\Translator;
-use Leadvertex\Plugin\Instance\Logistic\Components\FieldGroups\SenderFieldGroup;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\PasswordDefinition;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\StringDefinition;
+use SalesRender\Plugin\Components\Form\FieldGroup;
+use SalesRender\Plugin\Components\Form\Form;
+use SalesRender\Plugin\Components\Translations\Translator;
+use SalesRender\Plugin\Instance\Logistic\Components\FieldGroups\SenderFieldGroup;
 
 class SettingsForm extends Form
 {

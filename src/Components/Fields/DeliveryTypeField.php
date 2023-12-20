@@ -5,14 +5,14 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Instance\Logistic\Components\Fields;
+namespace SalesRender\Plugin\Instance\Logistic\Components\Fields;
 
 
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Limit;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Values\StaticValues;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnumDefinition;
-use Leadvertex\Plugin\Components\Logistic\Waybill\DeliveryType;
-use Leadvertex\Plugin\Components\Translations\Translator;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Limit;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Values\StaticValues;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\ListOfEnumDefinition;
+use SalesRender\Plugin\Components\Logistic\Waybill\DeliveryType;
+use SalesRender\Plugin\Components\Translations\Translator;
 
 class DeliveryTypeField extends ListOfEnumDefinition
 {

@@ -5,25 +5,25 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Instance\Logistic\Waybill;
+namespace SalesRender\Plugin\Instance\Logistic\Waybill;
 
 
-use Leadvertex\Plugin\Addon\EnumFields\FieldsValidator;
-use Leadvertex\Plugin\Addon\EnumFields\FieldsValues;
-use Leadvertex\Plugin\Addon\EnumFields\FieldTypesRegistry;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\BooleanDefinition;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\FieldDefinition;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\FloatDefinition;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Limit;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Values\StaticValues;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnumDefinition;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\StringDefinition;
-use Leadvertex\Plugin\Components\Form\FieldGroup;
-use Leadvertex\Plugin\Components\Form\Form;
-use Leadvertex\Plugin\Components\Form\FormData;
-use Leadvertex\Plugin\Components\Translations\Translator;
-use Leadvertex\Plugin\Instance\Logistic\Components\Fields\DeliveryTypeField;
-use Leadvertex\Plugin\Instance\Logistic\Components\Validators\StringValidator;
+use SalesRender\Plugin\Addon\EnumFields\OrderFieldsValidator;
+use SalesRender\Plugin\Addon\EnumFields\OrderFieldsValues;
+use SalesRender\Plugin\Addon\EnumFields\OrderFieldTypesRegistry;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\BooleanDefinition;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\FieldDefinition;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\FloatDefinition;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Limit;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Values\StaticValues;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\ListOfEnumDefinition;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\StringDefinition;
+use SalesRender\Plugin\Components\Form\FieldGroup;
+use SalesRender\Plugin\Components\Form\Form;
+use SalesRender\Plugin\Components\Form\FormData;
+use SalesRender\Plugin\Components\Translations\Translator;
+use SalesRender\Plugin\Instance\Logistic\Components\Fields\DeliveryTypeField;
+use SalesRender\Plugin\Instance\Logistic\Components\Validators\StringValidator;
 use League\ISO3166\ISO3166;
 use Respect\Validation\Rules\CountryCode;
 
@@ -214,8 +214,8 @@ class WaybillForm extends Form
                         'field' => new ListOfEnumDefinition(
                             Translator::get('waybill', 'Адрес'),
                             null,
-                            new FieldsValidator([FieldTypesRegistry::ADDRESS], true),
-                            new FieldsValues([FieldTypesRegistry::ADDRESS]),
+                            new OrderFieldsValidator([OrderFieldTypesRegistry::ADDRESS], true),
+                            new OrderFieldsValues([OrderFieldTypesRegistry::ADDRESS]),
                             new Limit(1, 1),
                         ),
                         'postcode' => new StringDefinition(

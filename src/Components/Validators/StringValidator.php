@@ -5,13 +5,13 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Instance\Logistic\Components\Validators;
+namespace SalesRender\Plugin\Instance\Logistic\Components\Validators;
 
 
-use Leadvertex\Plugin\Components\Form\Components\ValidatorInterface;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\FieldDefinition;
-use Leadvertex\Plugin\Components\Form\FormData;
-use Leadvertex\Plugin\Components\Translations\Translator;
+use SalesRender\Plugin\Components\Form\Components\ValidatorInterface;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\FieldDefinition;
+use SalesRender\Plugin\Components\Form\FormData;
+use SalesRender\Plugin\Components\Translations\Translator;
 
 class StringValidator implements ValidatorInterface
 {

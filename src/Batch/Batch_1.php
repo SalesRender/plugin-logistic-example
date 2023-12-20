@@ -5,17 +5,17 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Instance\Logistic\Batch;
+namespace SalesRender\Plugin\Instance\Logistic\Batch;
 
 
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Limit;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Values\CallableValues;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\ListOfEnumDefinition;
-use Leadvertex\Plugin\Components\Form\FieldGroup;
-use Leadvertex\Plugin\Components\Form\Form;
-use Leadvertex\Plugin\Components\Settings\Settings;
-use Leadvertex\Plugin\Components\Translations\Translator;
-use Leadvertex\Plugin\Instance\Logistic\Components\Fields\DeliveryTypeField;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Limit;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\ListOfEnum\Values\CallableValues;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\ListOfEnumDefinition;
+use SalesRender\Plugin\Components\Form\FieldGroup;
+use SalesRender\Plugin\Components\Form\Form;
+use SalesRender\Plugin\Components\Settings\Settings;
+use SalesRender\Plugin\Components\Translations\Translator;
+use SalesRender\Plugin\Instance\Logistic\Components\Fields\DeliveryTypeField;
 
 class Batch_1 extends Form
 {

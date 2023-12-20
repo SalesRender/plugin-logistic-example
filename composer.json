@@ -1,5 +1,5 @@
 {
-  "name": "leadvertex/plugin-logistic-example",
+  "name": "salesrender/plugin-logistic-example",
   "description": "Example logistic plugin",
   "type": "project",
   "minimum-stability": "stable",
@@ -7,12 +7,12 @@
   "authors": [
     {
       "name": "Timur Kasumov aka XAKEPEHOK",
-      "email": "support@leadvertex.com"
+      "email": "support@salesrender.com"
     }
   ],
   "autoload": {
     "psr-4": {
-      "Leadvertex\\Plugin\\Instance\\Logistic\\": "src/"
+      "SalesRender\\Plugin\\Instance\\Logistic\\": "src/"
     }
   },
   "require": {
@@ -20,7 +20,7 @@
     "ext-json": "*",
     "respect/validation": "^1.1",
     "league/iso3166": "^3.0",
-    "leadvertex/plugin-core-logistic": "^0.3.0",
-    "leadvertex/plugin-addon-enum-fields": "^0.2.0"
+    "salesrender/plugin-core-logistic": "^0.5.0",
+    "salesrender/plugin-addon-enum-fields": "^0.3.0"
   }
 }

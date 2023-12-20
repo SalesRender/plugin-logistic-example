@@ -5,25 +5,25 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Instance\Logistic\Waybill;
+namespace SalesRender\Plugin\Instance\Logistic\Waybill;
 
 
-use Leadvertex\Components\Address\Address;
-use Leadvertex\Components\Address\Location;
-use Leadvertex\Components\MoneyValue\MoneyValue;
-use Leadvertex\Plugin\Components\Form\Form;
-use Leadvertex\Plugin\Components\Form\FormData;
-use Leadvertex\Plugin\Components\Logistic\Exceptions\LogisticDataTooBigException;
-use Leadvertex\Plugin\Components\Logistic\Exceptions\NegativePriceException;
-use Leadvertex\Plugin\Components\Logistic\Logistic;
-use Leadvertex\Plugin\Components\Logistic\LogisticStatus;
-use Leadvertex\Plugin\Components\Logistic\Waybill\DeliveryTerms;
-use Leadvertex\Plugin\Components\Logistic\Waybill\DeliveryType;
-use Leadvertex\Plugin\Components\Logistic\Waybill\Track;
-use Leadvertex\Plugin\Components\Logistic\Waybill\Waybill;
-use Leadvertex\Plugin\Core\Logistic\Components\Waybill\Response\WaybillAddress;
-use Leadvertex\Plugin\Core\Logistic\Components\Waybill\Response\WaybillResponse;
-use Leadvertex\Plugin\Core\Logistic\Components\Waybill\WaybillHandlerInterface;
+use SalesRender\Components\Address\Address;
+use SalesRender\Components\Address\Location;
+use SalesRender\Components\MoneyValue\MoneyValue;
+use SalesRender\Plugin\Components\Form\Form;
+use SalesRender\Plugin\Components\Form\FormData;
+use SalesRender\Plugin\Components\Logistic\Exceptions\LogisticDataTooBigException;
+use SalesRender\Plugin\Components\Logistic\Exceptions\NegativePriceException;
+use SalesRender\Plugin\Components\Logistic\Logistic;
+use SalesRender\Plugin\Components\Logistic\LogisticStatus;
+use SalesRender\Plugin\Components\Logistic\Waybill\DeliveryTerms;
+use SalesRender\Plugin\Components\Logistic\Waybill\DeliveryType;
+use SalesRender\Plugin\Components\Logistic\Waybill\Track;
+use SalesRender\Plugin\Components\Logistic\Waybill\Waybill;
+use SalesRender\Plugin\Core\Logistic\Components\Waybill\Response\WaybillAddress;
+use SalesRender\Plugin\Core\Logistic\Components\Waybill\Response\WaybillResponse;
+use SalesRender\Plugin\Core\Logistic\Components\Waybill\WaybillHandlerInterface;
 use XAKEPEHOK\ValueObjectBuilder\VOB;
 
 class WaybillHandler implements WaybillHandlerInterface

@@ -5,15 +5,15 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Plugin\Instance\Logistic\Components\FieldGroups;
+namespace SalesRender\Plugin\Instance\Logistic\Components\FieldGroups;
 
 
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\BooleanDefinition;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\IntegerDefinition;
-use Leadvertex\Plugin\Components\Form\FieldDefinitions\StringDefinition;
-use Leadvertex\Plugin\Components\Form\FieldGroup;
-use Leadvertex\Plugin\Components\Form\FormData;
-use Leadvertex\Plugin\Components\Translations\Translator;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\BooleanDefinition;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\IntegerDefinition;
+use SalesRender\Plugin\Components\Form\FieldDefinitions\StringDefinition;
+use SalesRender\Plugin\Components\Form\FieldGroup;
+use SalesRender\Plugin\Components\Form\FormData;
+use SalesRender\Plugin\Components\Translations\Translator;
 
 class SenderFieldGroup extends FieldGroup
 {
