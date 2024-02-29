@@ -20,7 +20,7 @@
     "ext-json": "*",
     "respect/validation": "^1.1",
     "league/iso3166": "^3.0",
-    "salesrender/plugin-core-logistic": "^0.5.0",
-    "salesrender/plugin-addon-enum-fields": "^0.3.0"
+    "salesrender/plugin-core-logistic": "^0.7.0",
+    "salesrender/plugin-addon-enum-fields": "^0.4.0"
   }
 }

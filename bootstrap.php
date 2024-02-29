@@ -10,13 +10,18 @@ use SalesRender\Plugin\Components\Db\Components\Connector;
 use SalesRender\Plugin\Components\Info\Developer;
 use SalesRender\Plugin\Components\Info\Info;
 use SalesRender\Plugin\Components\Info\PluginType;
+use SalesRender\Plugin\Components\Purpose\LogisticPluginClass;
+use SalesRender\Plugin\Components\Purpose\PluginEntity;
 use SalesRender\Plugin\Components\Settings\Settings;
 use SalesRender\Plugin\Components\Translations\Translator;
 use SalesRender\Plugin\Core\Actions\Upload\LocalUploadAction;
 use SalesRender\Plugin\Core\Actions\Upload\UploadersContainer;
+use SalesRender\Plugin\Core\Logistic\Components\Actions\Shipping\ShippingContainer;
 use SalesRender\Plugin\Core\Logistic\Components\Waybill\WaybillContainer;
 use SalesRender\Plugin\Instance\Logistic\Batch\Batch_1;
 use SalesRender\Plugin\Instance\Logistic\Batch\BatchShippingHandler;
+use SalesRender\Plugin\Instance\Logistic\Components\Actions\CancelAction;
+use SalesRender\Plugin\Instance\Logistic\Components\Actions\RemoveOrdersAction;
 use SalesRender\Plugin\Instance\Logistic\Settings\SettingsForm;
 use SalesRender\Plugin\Instance\Logistic\Waybill\WaybillForm;
 use SalesRender\Plugin\Instance\Logistic\Waybill\WaybillHandler;
@@ -40,7 +45,12 @@ Info::config(
     new PluginType(PluginType::LOGISTIC),
     fn() => Translator::get('info', 'Example logistic'),
     fn() => Translator::get('info', 'Example **logistic** description'),
-    ["country" => "RU"],
+    [
+        "class" => LogisticPluginClass::CLASS_DELIVERY,
+        "entity" => PluginEntity::ENTITY_ORDER,
+        "currency" => ["RUB"],
+        "codename" => "SR_LOGISTIC_EXAMPLE",
+    ],
     new Developer(
         'Example company',
         'support.for.plugin@example.com',
@@ -75,4 +85,10 @@ BatchContainer::config(
 WaybillContainer::config(
     fn() => new WaybillForm(),
     new WaybillHandler()
+);
+
+# Configure shipping cancel action (optional)
+ShippingContainer::config(
+    new CancelAction(),
+    new RemoveOrdersAction(),
 );
